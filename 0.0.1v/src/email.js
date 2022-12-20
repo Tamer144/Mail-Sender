@@ -1,16 +1,21 @@
 // File: email.js
 const nodemailer = require('nodemailer');
 
+var env = process.env.NODE_ENV || 'development';
+if(env === 'development'){
+    require('dotenv').config({path:'../../.env'})
+}
+
 const transporter = nodemailer.createTransport({
-  host: 'smtp.ethereal.email',
+  host: process.env.HOST,
   port: 587,
   tls: {
     rejectUnauthorized: true,
     minVersion: "TLSv1.2"
   },
   auth: {
-    user: 'marcellus.vonrueden@ethereal.email',
-    pass: 'Hk72EkuV9gCcy8fFUv'
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD
   }
 });
 
