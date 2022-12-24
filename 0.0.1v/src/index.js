@@ -3,16 +3,24 @@ const { sendEmail } = require('./email');
 
 var env = process.env.NODE_ENV || 'development';
 if(env === 'development'){
-    require('dotenv').config({path:'../../.env'})
+    require('dotenv').config()
 }
 
 const app = express();
 
+app.use(express.urlencoded({extended:true}))
+
 app.post('/send-email', async (req, res) => {
   try {
-    const info = await sendEmail('marcellus.vonrueden@ethereal.email' , 'marcellus.vonrueden@ethereal.email', 'a new message from your Website .', 'This is a test email sent from an Express.js app.');
-    console.log(`Email sent: ${info.response}`);
-    res.send('Email sent successfully!');
+    const data = req.body;
+    if(data.firstName && data.lastName && data.text){
+      const info = await sendEmail( process.env.EMAIL, process.env.EMAIL, `${data.firstName} ${data.lastName} sent you a Message .`, data.text);
+      console.log(`Email sent: ${info.response}`);
+      res.send('Email sent successfully!');
+    }else{
+      res.send('All fields required ...')
+      return;
+    }
   } catch (error) {
     console.log(error);
     res.send(error);

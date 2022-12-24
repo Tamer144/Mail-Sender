@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 
 var env = process.env.NODE_ENV || 'development';
 if(env === 'development'){
-    require('dotenv').config({path:'../../.env'})
+    require('dotenv').config()
 }
 
 const transporter = nodemailer.createTransport({
