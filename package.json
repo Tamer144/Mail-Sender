@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./0.0.1v/src/index.js"
+    "start": "node ./0.0.1v/src/index.js",
+    "start-api": "netlify-lambda serve functions"
   },
   "keywords": [],
   "author": "",
